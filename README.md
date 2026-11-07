@@ -41,6 +41,10 @@ python ./scripts/verify-build.py --matrix
 
 <img src=".github/feedback-qq.png" alt="mc模组问题反馈群二维码，群号 873511838" width="220">
 
-## 许可
+## 作者、许可与素材
+
+作者：jiaotan_。
+
+- jiaotan_：[bilibili](https://space.bilibili.com/409729840?) · [抖音](https://v.douyin.com/KDs5ZxJh5V8/)
 
 项目采用现行模组元数据中的 All Rights Reserved 声明。见[许可状态](LICENSE-STATUS.md)、[第三方素材与依赖](THIRD_PARTY_NOTICES.md)和[版本记录](CHANGELOG.md)。
