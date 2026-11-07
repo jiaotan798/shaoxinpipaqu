@@ -13,7 +13,7 @@ processQaResources.from('../shared-1.20.1/src/main/resources/pack.mcmeta')
 // 跨版本仅共享不受 1.20.1 API 影响的实现；版本差异在两个旧版端共用源码中处理。
 def original = file('../../mod/src/main/java/com/shaoxinpipaqu')
 compileJava.source fileTree(original) {
-    include 'AudioInfo.java', 'FlightRules.java', 'SongState.java'
+    include 'AudioInfo.java', 'FlightOverlap.java', 'FlightRules.java', 'SongState.java'
     include 'client/AnimalFlightPose.java', 'client/AnimalModelRoot.java', 'client/FlightPoseMotion.java', 'client/MemeTiming.java'
     include 'mixin/AnimationMixin.java', 'mixin/CarriedBlockMixin.java', 'mixin/FlightPushMixin.java'
     include 'mixin/MobAiMixin.java', 'mixin/ModelPartAccessor.java', 'mixin/PlayerTravelMixin.java', 'mixin/Quadruped*.java'

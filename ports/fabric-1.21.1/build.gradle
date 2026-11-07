@@ -1,6 +1,6 @@
 plugins { id 'net.fabricmc.fabric-loom-remap' version '1.15.5' }
 
-version = '0.2.8'
+version = '0.3.0'
 group = 'com.shaoxinpipaqu'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -32,6 +32,11 @@ remapJar { archiveFileName = "shaoxinpipaqu-${version}-Fabric-1.21.1.jar" }
 
 sourceSets {
     qa { compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath }
+}
+processQaResources {
+    def resourceVersion = project.version.toString()
+    inputs.property 'version', resourceVersion
+    filesMatching('fabric.mod.json') { expand(version: resourceVersion) }
 }
 compileQaJava.source file('../../mod/src/qa/java/com/shaoxinpipaqu/qa/mixin/BackgroundMouseMixin.java')
 def qaJar = tasks.register('qaJar', Jar) {

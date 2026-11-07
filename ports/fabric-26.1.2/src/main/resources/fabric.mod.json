@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "shaoxinpipaqu",
-  "version": "0.2.9",
+  "version": "${version}",
   "name": "烧心琵琶曲",
   "description": "朋友的酒附属：琵琶曲、生物飞行、忘情牛肉面与野生狗奶。",
   "license": "All Rights Reserved",

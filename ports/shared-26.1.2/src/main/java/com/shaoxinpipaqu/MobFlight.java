@@ -23,9 +23,6 @@ import net.minecraft.world.phys.*;
 public final class MobFlight {
     private static final Map<Mob, Control> CONTROL = new WeakHashMap<>();
     private static final Map<DollBlockEntity, Long> CYCLES = new WeakHashMap<>();
-    // 只用于降落脱困：每 tick 试探四个水平方向各 0.1 格，避免向下挤入脚边生物。
-    private static final List<Vec3> LANDING_ESCAPE = List.of(
-            new Vec3(0.1,0,0),new Vec3(-0.1,0,0),new Vec3(0,0,0.1),new Vec3(0,0,-0.1));
     private static final String RECOVERY = "PipaFlightRecovery";
     private static final String GRAVITY = "PipaOriginalNoGravity";
     private MobFlight() {}
@@ -117,7 +114,8 @@ public final class MobFlight {
             c.landing=true; c.velocity=Vec3.ZERO; m.setNoGravity(Pipa.data(m).getBooleanOr(GRAVITY,false)); m.fallDistance=0; return;
         }
         if (c.landing && (m.onGround() || m.isInWater())) { release(m); return; }
-        if (c.landing && level.getBlockCollisions(m,m.getBoundingBox().move(0,-0.12,0)).iterator().hasNext()) {
+        if (c.landing && level.getBlockCollisions(m,m.getBoundingBox().move(0,-0.12,0)).iterator().hasNext()
+                && !livingCollision(level,m,m.getBoundingBox().expandTowards(0,-0.1,0).inflate(0.03,0,0.03))) {
             // 探地 0.12 格不代表本次限速 0.1 格已经落地；无 AI 个体提前释放后会悬在剩余小缝隙上。
             m.move(MoverType.SELF,new Vec3(0,-0.1,0)); if (m.onGround()) release(m); return;
         }
@@ -157,7 +155,8 @@ public final class MobFlight {
         if (now<c.retryAt) motion=Vec3.ZERO;
         else if (!safe(level, m, motion, c.cruising && !c.landing)) {
             motion = avoid(level, m, motion, c.cruising && !c.landing, c.landing);
-            if (c.landing && motion.lengthSqr()<=1e-8) motion = escapeLandingOverlap(level,m);
+            // 普通扫掠会被起点已有的重叠挡住；先脱离，再恢复原航线或继续降落。
+            if (motion.lengthSqr()<=1e-8) motion = FlightOverlap.escape(level,m,c.landing,box -> terrainClear(level,m,box));
             c.nextTarget = 0;
             if (motion.lengthSqr()>1e-8) c.blocked=0;
             else if (++c.blocked>=40) { motion=Vec3.ZERO; c.retryAt=now+20; c.blocked=0; }
@@ -181,39 +180,20 @@ public final class MobFlight {
     }
     /** 对整段扫掠体积检查方块、实体及所有横跨区块，拒绝隐式区块加载。 */
     public static boolean safe(ServerLevel level, Mob m, Vec3 delta, boolean clearance) {
-        return safe(level,m,delta,clearance,false);
-    }
-    private static boolean safe(ServerLevel level, Mob m, Vec3 delta, boolean clearance, boolean escape) {
         // 只横向留余量；向下膨胀会把脚下地板误当作起飞障碍，导致正常站地生物永远不能起飞。
-        AABB start = m.getBoundingBox().inflate(0.03,0,0.03);
-        AABB box = start.expandTowards(delta);
-        if (box.minY < level.getMinY() || box.maxY >= level.getMaxY() + 1 || !level.getWorldBorder().isWithinBounds(box)) return false;
-        for (int x = Mth.floor(box.minX)>>4; x <= Mth.floor(box.maxX)>>4; x++) for (int z = Mth.floor(box.minZ)>>4; z <= Mth.floor(box.maxZ)>>4; z++) if (!level.hasChunk(x,z)) return false;
-        if (level.getBlockCollisions(m, box).iterator().hasNext()) return false;
-        var occupants = livingOccupants(level,m,box);
-        if (escape) {
-            if (occupants.isEmpty()) return false;
-            AABB end = start.move(delta);
-            for (Entity entity : occupants) {
-                AABB other = entity.getBoundingBox();
-                if (!start.intersects(other)) return false;
-                if (end.intersects(other) && separation(end,other,delta.x!=0)>=separation(start,other,delta.x!=0)) return false;
-            }
-        } else if (!occupants.isEmpty()) return false;
+        AABB box = m.getBoundingBox().expandTowards(delta).inflate(0.03,0,0.03);
+        if (!terrainClear(level,m,box) || livingCollision(level,m,box)) return false;
         // 刚进入巡航时可能仍在玩偶顶面上方不足两格；允许原地上升补足净空，否则所有避障方向都会被脚下方块锁死。
         // 仅豁免纯上升的下方净空，前面的身体扫掠仍检查天花板、实体和区块，不允许横向贴地穿越。
         boolean lifting=delta.y>0 && delta.horizontalDistanceSqr()<1e-10;
         if (clearance && !lifting && level.getBlockCollisions(m,m.getBoundingBox().move(delta).expandTowards(0,-2,0)).iterator().hasNext()) return false;
         return true;
     }
-    /** 普通扫掠包含起点，已重叠时必然拦截。降落可缩短每处已有重叠的脱离距离，整段仍不得进入新实体。 */
-    private static Vec3 escapeLandingOverlap(ServerLevel level,Mob mob) {
-        for (Vec3 delta : LANDING_ESCAPE) if (safe(level,mob,delta,false,true)) return delta;
-        return Vec3.ZERO;
-    }
-    private static double separation(AABB a,AABB b,boolean alongX) {
-        // 窄碰撞箱完全包含在宽箱内时，横移可以接近边缘而重叠体积仍不变。
-        return alongX ? Math.min(a.maxX-b.minX,b.maxX-a.minX) : Math.min(a.maxZ-b.minZ,b.maxZ-a.minZ);
+
+    private static boolean terrainClear(ServerLevel level, Mob m, AABB box) {
+        if (box.minY < level.getMinY() || box.maxY >= level.getMaxY() + 1 || !level.getWorldBorder().isWithinBounds(box)) return false;
+        for (int x = Mth.floor(box.minX)>>4; x <= Mth.floor(box.maxX)>>4; x++) for (int z = Mth.floor(box.minZ)>>4; z <= Mth.floor(box.maxZ)>>4; z++) if (!level.hasChunk(x,z)) return false;
+        return !level.getBlockCollisions(m,box).iterator().hasNext();
     }
     private static Vec3 avoid(ServerLevel l, Mob m, Vec3 v, boolean clearance, boolean landing) {
         for (Vec3 d : new Vec3[]{new Vec3(0,0.1,0),new Vec3(-v.z,v.y,v.x),new Vec3(v.z,v.y,-v.x),new Vec3(v.x,0,v.z),new Vec3(0,-0.1,0)}) if ((!landing || d.y<=0) && safe(l,m,d,clearance)) return d;
@@ -240,10 +220,7 @@ public final class MobFlight {
     }
     /** 统一巡航扫掠与落点的生物边界：存活且非旁观的生物/玩家均需避让，不推挤让路。 */
     private static boolean livingCollision(ServerLevel level,Mob mob,AABB box) {
-        return !livingOccupants(level,mob,box).isEmpty();
-    }
-    private static List<Entity> livingOccupants(ServerLevel level,Mob mob,AABB box) {
-        return level.getEntities(mob,box,e->e.isAlive()&&!e.isSpectator()&&e instanceof LivingEntity);
+        return !level.getEntities(mob,box,e->e.isAlive()&&!e.isSpectator()&&e instanceof LivingEntity).isEmpty();
     }
     private static void release(Mob m) {
         m.setNoGravity(Pipa.data(m).getBooleanOr(GRAVITY,false));

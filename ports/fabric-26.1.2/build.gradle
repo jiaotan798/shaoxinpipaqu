@@ -11,6 +11,9 @@ loom { runs { server { programArgs '--nogui' } } }
 fabricApi { configureTests { createSourceSet = true; modId = 'shaoxinpipaqu-tests'; enableClientGameTests = false; eula = true } }
 sourceSets.gametest.java.srcDir('../shared-26.1.2/src/gametest/java')
 processGametestResources {
+    def resourceVersion = project.version.toString()
+    inputs.property 'version', resourceVersion
+    filesMatching('fabric.mod.json') { expand(version: resourceVersion) }
     from('../../mod/src/main/resources/data/shaoxinpipaqu/structure/range.nbt') {
         into 'data/shaoxinpipaqu/structure'
     }

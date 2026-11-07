@@ -66,6 +66,30 @@ public final class PipaLifecycleGameTests {
             blocker.discard();pig.discard();h.succeed();
         });
     }
+    /** 两只生物从对角占位时，横向单轴会靠近其中一只，必须允许斜向脱离。 */
+    @GameTest(template="range",batch="pipa-landing-diagonal",timeoutTicks=120)
+    public static void landingEscapesDiagonalOverlap(GameTestHelper h) {
+        for (var pos : BlockPos.betweenClosed(50,1,50,60,1,60)) h.setBlock(pos,Blocks.STONE);
+        var first=h.spawn(EntityType.PIG,new Vec3(55.3,2,55.3));
+        var second=h.spawn(EntityType.PIG,new Vec3(53.7,2,53.7));
+        var pig=h.spawn(EntityType.PIG,new Vec3(54.5,2+first.getBbHeight()-0.05,54.5));
+        for (var mob : java.util.List.of(first,second,pig)) {
+            mob.setNoAi(true);
+            mob.setNoGravity(true);
+        }
+        var start=pig.position();
+        h.assertTrue(pig.getBoundingBox().intersects(first.getBoundingBox())
+                && pig.getBoundingBox().intersects(second.getBoundingBox()),"夹具须同时与两只占位猪重叠");
+        pig.getPersistentData().putBoolean("PipaFlightRecovery",true);
+        MobFlight.entityTick(pig);
+        h.assertTrue(pig.getY()==start.y && pig.getX()!=start.x && pig.getZ()!=start.z,"第一步须斜向退让且保持高度");
+        h.startSequence().thenWaitUntil(() -> h.assertFalse(MobFlight.controlled(pig),"脱离后完成降落"))
+                .thenExecute(() -> {
+                    h.assertTrue(pig.onGround()&&!pig.isNoGravity()&&!pig.hasEffect(Pipa.AIRBORNE),"落地恢复重力并结束飞行姿势");
+                    first.discard(); second.discard(); pig.discard();
+                }).thenSucceed();
+    }
+
     /** 探地距离 0.12 格大于单 tick 下降上限 0.1 格，不能把“快碰地”当作“已落地”。 */
     @GameTest(template="range",batch="pipa-landing-gap")
     public static void landingMustReachGround(GameTestHelper h) {

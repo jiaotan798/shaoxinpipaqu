@@ -1,4 +1,4 @@
-version = '0.2.9'
+version = '0.3.0'
 group = 'com.shaoxinpipaqu'
 base { archivesName = 'shaoxinpipaqu' }
 java { toolchain.languageVersion = JavaLanguageVersion.of(25) }
@@ -9,13 +9,16 @@ sourceSets.main.java.srcDir('../shared-26.1.2/src/main/java')
 sourceSets.main.resources.srcDir('../shared-26.1.2/src/main/resources')
 def baseline = '../../mod/src/main'
 compileJava.source files([
-    'AudioInfo.java', 'FlightRules.java', 'SongState.java',
+    'AudioInfo.java', 'FlightOverlap.java', 'FlightRules.java', 'SongState.java',
     'client/FlightPoseMotion.java', 'client/MemeTiming.java',
     'mixin/AnimationMixin.java', 'mixin/FlightPushMixin.java',
     'mixin/MobAiMixin.java', 'mixin/TradeMenuMixin.java',
     'mixin/ModelPartAccessor.java'
 ].collect { "${baseline}/java/com/shaoxinpipaqu/${it}" })
 processResources {
+    def resourceVersion = project.version.toString()
+    inputs.property 'version', resourceVersion
+    filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) { expand(version: resourceVersion) }
     from("${baseline}/resources/assets") {
         into 'assets'
         exclude '**/shaders/**'

@@ -3,7 +3,7 @@ loaderVersion="[4,)"
 license="All Rights Reserved"
 [[mods]]
 modId="shaoxinpipaqu"
-version="0.2.9"
+version="${version}"
 displayName="烧心琵琶曲"
 description="朋友的酒附属：琵琶曲、生物飞行、忘情牛肉面与野生狗奶。"
 [[dependencies.shaoxinpipaqu]]
