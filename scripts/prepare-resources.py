@@ -55,7 +55,8 @@ def main():
     digest = hashlib.sha256(source.read_bytes()).hexdigest()
     with tempfile.TemporaryDirectory(prefix="pipa-") as folder:
         pcm = Path(folder) / "pipa.wav"
-        run("-i", source, "-ac", 1, "-ar", 44100, "-c:a", "pcm_s16le", pcm)
+        # 转成 16 位 PCM 前衰减 14.3 dB，使琵琶曲接近《朋友的酒》0.1.19 的 -24.5 LUFS。
+        run("-i", source, "-af", "volume=-14.3dB", "-ac", 1, "-ar", 44100, "-c:a", "pcm_s16le", pcm)
         with wave.open(str(pcm), "rb") as audio:
             frames, rate = audio.getnframes(), audio.getframerate()
         duration = frames / rate
