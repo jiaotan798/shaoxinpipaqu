@@ -1,0 +1,36 @@
+version = '0.2.9'
+group = 'com.shaoxinpipaqu'
+base { archivesName = 'shaoxinpipaqu' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(25) }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+
+// 共享 26.1.2 的玩法与延迟渲染接口；纯规则、原始资源及签名未变的挂钩继续复用基线。
+sourceSets.main.java.srcDir('../shared-26.1.2/src/main/java')
+sourceSets.main.resources.srcDir('../shared-26.1.2/src/main/resources')
+def baseline = '../../mod/src/main'
+compileJava.source files([
+    'AudioInfo.java', 'FlightRules.java', 'SongState.java',
+    'client/FlightPoseMotion.java', 'client/MemeTiming.java',
+    'mixin/AnimationMixin.java', 'mixin/FlightPushMixin.java',
+    'mixin/MobAiMixin.java', 'mixin/TradeMenuMixin.java',
+    'mixin/ModelPartAccessor.java'
+].collect { "${baseline}/java/com/shaoxinpipaqu/${it}" })
+processResources {
+    from("${baseline}/resources/assets") {
+        into 'assets'
+        exclude '**/shaders/**'
+    }
+}
+
+sourceSets {
+    qa {
+        java.srcDir('../shared-26.1.2/src/qa/java')
+        resources.srcDir('../shared-26.1.2/src/qa/resources')
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+    }
+}
+tasks.register('qaJar', Jar) {
+    from sourceSets.qa.output
+    archiveFileName = 'pipa-port-qa.jar'
+    destinationDirectory = layout.buildDirectory.dir('qa')
+}

@@ -1,0 +1,35 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.shaoxinpipaqu.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "EntityDataMixin",
+    "ServerLevelMixin",
+    "DollSongMixin",
+    "GroundAttractionMixin",
+    "MobAiMixin",
+    "FlightPushMixin",
+    "PlayerTravelMixin",
+    "TradeResultMixin",
+    "TradeMenuMixin"
+  ],
+  "client": [
+    "AnimationMixin",
+    "FlightRenderMixin",
+    "AnimalModelRootMixin",
+    "AnimalMeshMixin",
+    "ModelPartAccessor",
+    "CarriedBlockMixin",
+    "VillagerFlightMixin",
+    "QuadrupedAccessor",
+    "QuadrupedFlightMixin",
+    "GuestRenderMixin",
+    "SoundLocationAccessor",
+    "MusicMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "shaoxinpipaqu.forge.refmap.json"
+}

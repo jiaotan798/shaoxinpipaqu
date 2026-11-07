@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "pipa_qa",
+  "version": "1",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.shaoxinpipaqu.qa.FabricCheck"],
+    "client": ["com.shaoxinpipaqu.qa.FabricClientCheck"]
+  },
+  "depends": {"shaoxinpipaqu": "0.2.8"},
+  "mixins": [{"config": "pipa-fabric-qa.mixins.json", "environment": "client"}]
+}

@@ -1,0 +1,53 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.147'
+}
+apply from: '../shared-26.1.2/common.gradle'
+
+def friendswineRelease = file('../../local-deps/friendswine-0.1.19-NeoForge-26.1.2.jar')
+def runTests = providers.gradleProperty('gameTests').isPresent()
+if (runTests) {
+    // 正式前置在开发测试模式才引用未发布的前置测试类；只补到独立验收依赖，正式前置原件不写入。
+    def friendswineSources = file('../../local-deps/friendswine-source')
+    def fixtureClasses = file("${friendswineSources}/ports/neoforge-26.1.2/build/classes/java/main")
+    def fixtureJar = tasks.register('friendswineTestFixture', Jar) {
+        archiveFileName = 'friendswine-0.1.19-NeoForge-26.1.2-test-fixture.jar'
+        destinationDirectory = layout.buildDirectory.dir('test-dependencies')
+        from(zipTree(friendswineRelease))
+        from(fixtureClasses) { include 'com/friendswine/*GameTests*.class' }
+        from("${friendswineSources}/mod/src/main/resources") { include 'data/friendswine/structure/**' }
+        doFirst {
+            if (!new File(fixtureClasses, 'com/friendswine/PortGameTests.class').isFile())
+                throw new GradleException('请先在前置 NeoForge 26.1.2 开发工程离线执行 compileJava，生成前置专服验收夹具。')
+        }
+    }
+    dependencies { implementation files(fixtureJar) }
+} else {
+    dependencies { implementation files(friendswineRelease) }
+}
+neoForge {
+    version = '26.1.2.94'
+    runs {
+        server { server(); programArgument '--nogui' }
+        gameTestServer {
+            type = 'gameTestServer'
+            // 新版按测试 ID 过滤；前置夹具的固定交易/创造栏数量与附属同时装载时本来就不同。
+            programArguments.addAll '--tests', 'shaoxinpipaqu:*', '--report', '../build/gametest.xml'
+        }
+    }
+    mods { shaoxinpipaqu { sourceSet sourceSets.main } }
+}
+jar { archiveFileName = "shaoxinpipaqu-${version}-NeoForge-26.1.2.jar" }
+
+// 显式启用隔离测试源；玩家成品不包含测试入口、资源或夹具。
+if (runTests) {
+    sourceSets.main.java.srcDirs('src/gametest/java', '../shared-26.1.2/src/gametest/java')
+    processResources {
+        from('../../mod/src/main/resources/data/shaoxinpipaqu/structure/range.nbt') {
+            into 'data/shaoxinpipaqu/structure'
+        }
+    }
+    jar {
+        exclude 'com/shaoxinpipaqu/PortGameTests*', 'com/shaoxinpipaqu/PortRegression*', 'data/shaoxinpipaqu/structure/**'
+    }
+}

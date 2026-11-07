@@ -1,0 +1,18 @@
+plugins { id 'net.fabricmc.fabric-loom' version '1.15.5' }
+apply from: '../shared-26.1.2/common.gradle'
+
+dependencies {
+    minecraft 'com.mojang:minecraft:26.1.2'
+    implementation 'net.fabricmc:fabric-loader:0.19.4'
+    implementation 'net.fabricmc.fabric-api:fabric-api:0.149.0+26.1.2'
+    implementation files('../../local-deps/friendswine-0.1.19-Fabric-26.1.2.jar')
+}
+loom { runs { server { programArgs '--nogui' } } }
+fabricApi { configureTests { createSourceSet = true; modId = 'shaoxinpipaqu-tests'; enableClientGameTests = false; eula = true } }
+sourceSets.gametest.java.srcDir('../shared-26.1.2/src/gametest/java')
+processGametestResources {
+    from('../../mod/src/main/resources/data/shaoxinpipaqu/structure/range.nbt') {
+        into 'data/shaoxinpipaqu/structure'
+    }
+}
+jar { archiveFileName = "shaoxinpipaqu-${version}-Fabric-26.1.2.jar" }

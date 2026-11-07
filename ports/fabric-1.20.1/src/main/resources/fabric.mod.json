@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "shaoxinpipaqu",
+  "version": "${version}",
+  "name": "烧心琵琶曲",
+  "description": "《朋友的酒》附属。",
+  "license": "All Rights Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.shaoxinpipaqu.Pipa"],
+    "client": ["com.shaoxinpipaqu.client.PipaClient"],
+    "modmenu": ["com.shaoxinpipaqu.client.PipaModMenu"]
+  },
+  "mixins": ["shaoxinpipaqu.fabric.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "fabric-api": ">=0.92.9+1.20.1",
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "friendswine": "0.1.19"
+  }
+}

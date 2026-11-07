@@ -1,0 +1,12 @@
+.gradle/
+**/.gradle/
+**/build/
+**/run/
+**/run-server/
+**/run-release/
+local-deps/
+.verification/
+.idea/
+*.iml
+*.jar
+!**/gradle/wrapper/gradle-wrapper.jar

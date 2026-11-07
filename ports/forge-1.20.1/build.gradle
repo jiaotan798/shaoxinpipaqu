@@ -1,0 +1,72 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '6.0.54'
+    id 'org.spongepowered.mixin' version '0.7.38'
+}
+
+version = '0.2.9'
+group = 'com.shaoxinpipaqu'
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+base { archivesName = 'shaoxinpipaqu' }
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    runs {
+        server { workingDirectory project.file('run-server'); args '--nogui'; mods { shaoxinpipaqu { source sourceSets.main } } }
+    }
+}
+
+repositories {
+    // Gradle 8 与 Gradle 9 的解析元数据互不通用；离线构建可使用已下载的同版本 Maven 文件。
+    maven {
+        url = layout.buildDirectory.dir('offline-maven')
+        content { includeGroup('io.github.llamalad7') }
+    }
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+    maven { url = 'https://maven.minecraftforge.net/' }
+    mavenCentral()
+    // ForgeGradle 的重映射仓库会把带点号的分类名拆作扩展名，用固定发布文件名解析无分类坐标。
+    ivy {
+        url = '../../local-deps'
+        patternLayout { artifact 'friendswine-[revision]-Forge-1.20.1.jar' }
+        metadataSources { artifact() }
+        content { includeModule('local', 'friendswine') }
+    }
+}
+
+jarJar.enable()
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.4.23'
+    implementation fg.deobf('local:friendswine:0.1.19')
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    compileOnly(annotationProcessor('io.github.llamalad7:mixinextras-common:0.4.1'))
+    implementation 'io.github.llamalad7:mixinextras-forge:0.4.1'
+    jarJar('io.github.llamalad7:mixinextras-forge:0.4.1') {
+        jarJar.ranged(it, '[0.4.1,)')
+        jarJar.pin(it, '0.4.1')
+    }
+}
+mixin { add sourceSets.main, 'shaoxinpipaqu.forge.refmap.json'; config 'shaoxinpipaqu.forge.mixins.json' }
+
+apply from: '../shared-1.20.1/shared.gradle'
+jar {
+    archiveClassifier = 'slim'
+    manifest { attributes(['MixinConfigs':'shaoxinpipaqu.forge.mixins.json']) }
+    finalizedBy 'reobfJar'
+}
+tasks.named('jarJar') {
+    archiveFileName = "shaoxinpipaqu-${version}-Forge-1.20.1.jar"
+    manifest { attributes(['MixinConfigs':'shaoxinpipaqu.forge.mixins.json']) }
+    finalizedBy 'reobfJarJar'
+}
+
+dependencies { qaAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor' }
+mixin { add sourceSets.qa, 'pipa-port-qa.refmap.json' }
+tasks.register('qaJar', Jar) {
+    from sourceSets.qa.output
+    archiveFileName = 'pipa-port-qa.jar'
+    destinationDirectory = layout.buildDirectory.dir('qa')
+    manifest { attributes(['MixinConfigs':'pipa-port-qa.mixins.json']) }
+    finalizedBy 'reobfQaJar'
+}
+reobf { qaJar {} }

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "pipa_port_qa",
+  "version": "1",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.shaoxinpipaqu.qa.PortQa"],
+    "client": ["com.shaoxinpipaqu.qa.PortQaClient"]
+  },
+  "depends": {"shaoxinpipaqu": "*"},
+  "mixins": ["pipa-26-qa.mixins.json"]
+}

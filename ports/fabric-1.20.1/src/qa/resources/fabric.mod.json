@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "pipa_qa",
+  "version": "1",
+  "name": "Pipa 1.20.1 Multiplayer QA",
+  "environment": "*",
+  "entrypoints": {"main": ["com.shaoxinpipaqu.qa.FabricPortQa"]},
+  "depends": {"shaoxinpipaqu": ">=0.2.9"},
+  "mixins": [{"config": "pipa-port-qa.mixins.json", "environment": "client"}]
+}

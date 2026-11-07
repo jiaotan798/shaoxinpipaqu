@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.shaoxinpipaqu.qa.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "BackgroundWindowMixin",
+    "BackgroundMouseMixin",
+    "AudioCaptureMixin",
+    "ClientTickMixin",
+    "RenderProbeMixin",
+    "ModelProbeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

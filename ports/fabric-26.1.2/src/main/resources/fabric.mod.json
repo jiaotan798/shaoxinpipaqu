@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "shaoxinpipaqu",
+  "version": "0.2.9",
+  "name": "烧心琵琶曲",
+  "description": "朋友的酒附属：琵琶曲、生物飞行、忘情牛肉面与野生狗奶。",
+  "license": "All Rights Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.shaoxinpipaqu.Pipa"],
+    "client": ["com.shaoxinpipaqu.client.PipaClient"]
+  },
+  "mixins": ["shaoxinpipaqu.mixins.json", "shaoxinpipaqu.fabric.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "26.1.2",
+    "java": ">=25",
+    "fabric-api": ">=0.149.0+26.1.2",
+    "friendswine": "0.1.19"
+  }
+}

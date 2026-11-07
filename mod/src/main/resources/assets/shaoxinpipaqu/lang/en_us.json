@@ -1,0 +1,20 @@
+{
+  "item.shaoxinpipaqu.forgetful_beef_noodles": "Forgetful Beef Noodles",
+  "item.shaoxinpipaqu.wild_dog_milk": "Wild Dog Milk",
+  "effect.shaoxinpipaqu.forgetfulness": "Forgetfulness",
+  "effect.shaoxinpipaqu.great_grandma": "I Can See Great-Grandma",
+  "effect.shaoxinpipaqu.airborne": "Chinese People Can Fly",
+  "song.shaoxinpipaqu.pipa": "琵琶曲",
+  "song.shaoxinpipaqu.wine": "朋友的酒",
+  "message.shaoxinpipaqu.song": "Current song: %s",
+  "message.shaoxinpipaqu.remaining": "Flight: %s seconds remaining",
+  "message.shaoxinpipaqu.bowl": "Trading noodles also requires 1 bowl in your inventory",
+  "tooltip.shaoxinpipaqu.noodles": "Forgetfulness for 180s: prevents mob combat within 50 blocks; trading also consumes 1 inventory bowl",
+  "tooltip.shaoxinpipaqu.milk": "Flight for 60s: double-tap jump to fly; WASD moves, jump ascends, sneak descends",
+  "subtitles.shaoxinpipaqu.pipa": "琵琶曲",
+  "shaoxinpipaqu.configuration.title": "Shaoxin Pipa Settings",
+  "shaoxinpipaqu.config.showCueText": "Show timed text (MJ)",
+  "shaoxinpipaqu.config.showCueText.tooltip": "Enabled by default. Controls local MJ text; full lyrics remain deferred. Applies after saving without affecting music, flight or other players.",
+  "shaoxinpipaqu.config.showMemePictures": "Show timed meme pictures",
+  "shaoxinpipaqu.config.showMemePictures.tooltip": "Enabled by default. Controls the dog, cabbage and courage pictures locally. Re-enabling follows the current song position."
+}

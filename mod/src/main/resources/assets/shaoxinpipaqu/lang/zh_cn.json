@@ -1,0 +1,20 @@
+{
+  "item.shaoxinpipaqu.forgetful_beef_noodles": "忘情牛肉面",
+  "item.shaoxinpipaqu.wild_dog_milk": "野生狗奶",
+  "effect.shaoxinpipaqu.forgetfulness": "忘情",
+  "effect.shaoxinpipaqu.great_grandma": "我看见太奶了",
+  "effect.shaoxinpipaqu.airborne": "中国人能飞",
+  "song.shaoxinpipaqu.pipa": "琵琶曲",
+  "song.shaoxinpipaqu.wine": "朋友的酒",
+  "message.shaoxinpipaqu.song": "当前音频：%s",
+  "message.shaoxinpipaqu.remaining": "我看见太奶了：剩余 %s 秒",
+  "message.shaoxinpipaqu.bowl": "兑换忘情牛肉面还需背包中有 1 个碗",
+  "tooltip.shaoxinpipaqu.noodles": "忘情 180 秒：随身 50 格范围内生物停止攻击；兑换另从背包消耗 1 碗",
+  "tooltip.shaoxinpipaqu.milk": "我看见太奶了 60 秒：双击跳跃飞行；WASD 移动，跳跃上升，潜行下降",
+  "subtitles.shaoxinpipaqu.pipa": "琵琶曲",
+  "shaoxinpipaqu.configuration.title": "烧心琵琶曲设置",
+  "shaoxinpipaqu.config.showCueText": "显示卡点文字（MJ）",
+  "shaoxinpipaqu.config.showCueText.tooltip": "默认开启。只控制本机MJ卡点文字；整段歌词正文仍暂缓显示。保存后立即生效，不影响音乐、飞行或其他玩家。",
+  "shaoxinpipaqu.config.showMemePictures": "显示卡点表情包",
+  "shaoxinpipaqu.config.showMemePictures.tooltip": "默认开启。控制大狗、白菜和肥嘟嘟三张卡点图片。保存后立即生效，重新开启按当前歌曲进度显示。"
+}

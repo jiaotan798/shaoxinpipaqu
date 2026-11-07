@@ -1,0 +1,12 @@
+* text=auto eol=lf
+*.bat text eol=crlf
+*.png binary
+*.jpg binary
+*.ogg binary
+*.m4a binary
+*.nbt binary
+*.jar binary
+# 构建输入保留原字节，避免Git换行转换改变已核验的成品摘要。
+mod/src/** -text
+ports/**/src/** -text
+assets/source/** -text

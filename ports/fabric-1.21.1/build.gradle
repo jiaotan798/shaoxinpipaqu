@@ -1,0 +1,47 @@
+plugins { id 'net.fabricmc.fabric-loom-remap' version '1.15.5' }
+
+version = '0.2.8'
+group = 'com.shaoxinpipaqu'
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+dependencies {
+    minecraft 'com.mojang:minecraft:1.21.1'
+    mappings loom.officialMojangMappings()
+    modImplementation 'net.fabricmc:fabric-loader:0.19.4'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.116.7+1.21.1'
+    modImplementation files('../../local-deps/friendswine-0.1.19-Fabric-1.21.1.jar')
+}
+loom { mixin { useLegacyMixinAp = false } }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+
+// 同一 Minecraft 版本共用玩法与渲染源码；只替换加载器入口和前置注入选择器。
+def sharedJava = file('../../mod/src/main/java/com/shaoxinpipaqu')
+compileJava.source fileTree(sharedJava) {
+    include '*.java', 'client/*.java', 'mixin/*.java'
+    exclude 'Pipa.java', 'Network.java', '*GameTests.java', 'client/PipaClient.java', 'client/ClientConfig.java'
+    // Loom 静态重映射会把 Redirect 的单个 At 写成数组，Fabric 改用支持数组的 WrapOperation。
+    exclude 'mixin/GroundAttractionMixin.java', 'mixin/TradeResultMixin.java', 'mixin/GuestRenderMixin.java', 'mixin/MusicMixin.java'
+    exclude 'mixin/YsmFlightMixin.java', 'mixin/Maid*.java'
+}
+processResources {
+    inputs.property 'version', project.version
+    from('../../mod/src/main/resources') { include 'assets/**' }
+    filesMatching('fabric.mod.json') { expand(version: project.version) }
+}
+remapJar { archiveFileName = "shaoxinpipaqu-${version}-Fabric-1.21.1.jar" }
+
+sourceSets {
+    qa { compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath }
+}
+compileQaJava.source file('../../mod/src/qa/java/com/shaoxinpipaqu/qa/mixin/BackgroundMouseMixin.java')
+def qaJar = tasks.register('qaJar', Jar) {
+    from sourceSets.qa.output
+    archiveClassifier = 'qa-dev'
+}
+tasks.register('remapQaJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn qaJar
+    inputFile = qaJar.flatMap { it.archiveFile }
+    classpath.from(sourceSets.qa.compileClasspath)
+    archiveFileName = 'pipa-fabric-qa.jar'
+    destinationDirectory = layout.buildDirectory.dir('qa')
+}

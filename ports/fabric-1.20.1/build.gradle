@@ -1,0 +1,30 @@
+plugins { id 'net.fabricmc.fabric-loom-remap' version '1.15.5' }
+version = '0.2.9'
+group = 'com.shaoxinpipaqu'
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+repositories { maven { url = 'https://maven.terraformersmc.com/releases/' } }
+dependencies {
+    minecraft 'com.mojang:minecraft:1.20.1'
+    mappings loom.officialMojangMappings()
+    modImplementation 'net.fabricmc:fabric-loader:0.19.4'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.92.9+1.20.1'
+    modImplementation files('../../local-deps/friendswine-0.1.19-Fabric-1.20.1.jar')
+    modCompileOnly 'com.terraformersmc:modmenu:7.2.2'
+}
+loom { mixin { useLegacyMixinAp = false }; runs { server { programArgs '--nogui' } } }
+tasks.withType(JavaExec).configureEach { javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) } }
+tasks.withType(JavaCompile).configureEach { options.release = 17 }
+apply from: '../shared-1.20.1/shared.gradle'
+remapJar { archiveFileName = "shaoxinpipaqu-${version}-Fabric-1.20.1.jar" }
+
+def qaJar = tasks.register('qaJar', Jar) {
+    from sourceSets.qa.output
+    archiveClassifier = 'qa-dev'
+}
+tasks.register('remapQaJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn qaJar
+    inputFile = qaJar.flatMap { it.archiveFile }
+    classpath.from(sourceSets.qa.compileClasspath)
+    archiveFileName = 'pipa-port-qa.jar'
+    destinationDirectory = layout.buildDirectory.dir('qa')
+}

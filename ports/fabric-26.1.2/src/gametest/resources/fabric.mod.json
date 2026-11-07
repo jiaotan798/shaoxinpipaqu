@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "shaoxinpipaqu-tests",
+  "version": "0.2.9",
+  "name": "烧心琵琶曲服务端验收",
+  "entrypoints": {"fabric-gametest": ["com.shaoxinpipaqu.PortGameTests"]},
+  "depends": {"shaoxinpipaqu": "0.2.9", "fabric-gametest-api-v1": "*"}
+}

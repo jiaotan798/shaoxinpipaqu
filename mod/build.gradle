@@ -1,0 +1,78 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.147'
+}
+version = '0.2.8'
+group = 'com.shaoxinpipaqu'
+base { archivesName = 'shaoxinpipaqu' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+sourceSets {
+    qa {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += output + compileClasspath
+    }
+}
+neoForge {
+    version = '21.1.252'
+    parchment {
+        mappingsVersion = '2024.11.17'
+        minecraftVersion = '1.21.1'
+    }
+    runs {
+        client {
+            client()
+            if (project.hasProperty('clientCheck')) {
+                systemProperty 'pipa.qa', 'true'
+                programArguments.addAll '--quickPlaySingleplayer', 'pipa-check', '--width', '1100', '--height', '760'
+            }
+        }
+        server { server(); programArgument '--nogui' }
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'shaoxinpipaqu'
+        }
+    }
+    mods {
+        shaoxinpipaqu { sourceSet sourceSets.main }
+        if (project.hasProperty('clientCheck')) pipa_qa { sourceSet sourceSets.qa }
+    }
+}
+// 使用已交付前置，不复制它的源码、存档或本机认证配置。
+dependencies { implementation files('../local-deps/friendswine-0.1.19-NeoForge-1.21.1.jar') }
+// 仅编译已核对版本的可选桥接；这些第三方 JAR 不嵌入成品，也不是无模型模组玩法的必装依赖。
+dependencies {
+    compileOnly files('../local-deps/ysm-2.6.5-neoforge+mc1.21.1-release.jar')
+    compileOnly files('../local-deps/touhoulittlemaid-1.5.3-neoforge+mc1.21.1.jar')
+}
+tasks.register('qaJar', Jar) {
+    from sourceSets.qa.output
+    exclude 'com/shaoxinpipaqu/qa/Base*'
+    archiveFileName = 'pipa-qa.jar'
+    destinationDirectory = layout.buildDirectory.dir('qa')
+}
+// 基础依赖专项不带引用YSM/女仆类型的探针，验证玩家不装这两个模组时的真实启动与飞行。
+tasks.register('baseQaJar', Jar) {
+    from(sourceSets.qa.output) { include 'com/shaoxinpipaqu/qa/Base*', 'com/shaoxinpipaqu/qa/mixin/Background*', 'com/shaoxinpipaqu/qa/mixin/BaseMeme*' }
+    from 'src/baseQa/resources'
+    archiveFileName = 'pipa-base-qa.jar'
+    destinationDirectory = layout.buildDirectory.dir('qa')
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+// 纯数学自检不加载客户端类，专服环境也可验证姿态的起落和跨周边界。
+tasks.register('checkFlightPose', JavaExec) {
+    dependsOn tasks.named('classes')
+    classpath = sourceSets.main.output
+    mainClass = 'com.shaoxinpipaqu.client.FlightPoseMotion'
+}
+tasks.named('check') { dependsOn tasks.named('checkFlightPose') }
+tasks.register('checkMemeCues', JavaExec) {
+    dependsOn tasks.named('classes')
+    classpath = sourceSets.main.output
+    mainClass = 'com.shaoxinpipaqu.client.MemeTiming'
+}
+tasks.named('check') { dependsOn tasks.named('checkMemeCues') }
+tasks.named('jar', Jar) {
+    archiveFileName = "shaoxinpipaqu-${version}-NeoForge-1.21.1.jar"
+    exclude 'com/shaoxinpipaqu/*GameTests*.class'
+    exclude 'data/shaoxinpipaqu/structure/**'
+}

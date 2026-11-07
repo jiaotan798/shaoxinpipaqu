@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+[[mods]]
+modId="shaoxinpipaqu"
+version="${version}"
+displayName="烧心琵琶曲"
+description="《朋友的酒》附属。"
+[[dependencies.shaoxinpipaqu]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1]"
+ordering="NONE"
+side="BOTH"
+[[dependencies.shaoxinpipaqu]]
+modId="friendswine"
+mandatory=true
+versionRange="[0.1.19]"
+ordering="AFTER"
+side="BOTH"

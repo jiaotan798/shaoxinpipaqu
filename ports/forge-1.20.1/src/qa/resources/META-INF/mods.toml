@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+[[mods]]
+modId="pipa_qa"
+version="1"
+displayName="Pipa 1.20.1 Multiplayer QA"
+[[dependencies.pipa_qa]]
+modId="shaoxinpipaqu"
+mandatory=true
+versionRange="[0.2.9,)"
+ordering="AFTER"
+side="BOTH"

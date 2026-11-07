@@ -1,0 +1,9 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+[[mods]]
+modId="pipa_port_qa"
+version="1"
+displayName="烧心琵琶曲 26.1.2 双端验收探针"
+[[mixins]]
+config="pipa-26-qa.mixins.json"

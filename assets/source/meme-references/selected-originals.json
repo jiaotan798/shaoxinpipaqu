@@ -1,0 +1,32 @@
+[
+  {
+    "file": "chubby-courage-original.png",
+    "purpose": "胆子肥嘟嘟",
+    "provided_filename": "codex-clipboard-3c332689-8cee-42fa-ae59-22278d71c57b.png",
+    "source": "用户本次会话附件",
+    "sha256": "d8b73515feb4cbb6746b82e6cb1df8cf3797b9868be0c1cc6ae2294f9dcacedf",
+    "bytes": 235471,
+    "selected": true,
+    "transformed": false
+  },
+  {
+    "file": "big-dog-bark-original.jpg",
+    "purpose": "大狗叫",
+    "provided_filename": "89738bd5141dff0e574589c25d2d0426.jpg",
+    "source": "用户本次会话附件",
+    "sha256": "985fd28945fb2f6ef26f0282fbfbe52919604c2d202ec31e79f9a18921c20d72",
+    "bytes": 23558,
+    "selected": true,
+    "transformed": false
+  },
+  {
+    "file": "smiling-cabbage-original.jpg",
+    "purpose": "白菜对我笑",
+    "provided_filename": "f74e198cf4d2e5595a5fceea8ad8f6f6.jpg",
+    "source": "用户本次会话提供的替代附件，无可见抖音号",
+    "sha256": "011e8d6956b6cd4b40f4363ce2e5a2764ca779e57b867276cb60ce28b3f29cef",
+    "bytes": 167664,
+    "selected": true,
+    "transformed": false
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.shaoxinpipaqu.mixin",
+  "plugin": "com.shaoxinpipaqu.compat.CompatMixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["DollSongMixin", "GroundAttractionMixin", "MobAiMixin", "FlightPushMixin", "PlayerTravelMixin", "TradeResultMixin", "TradeMenuMixin"],
+  "client": ["AnimationMixin", "FlightRenderMixin", "AnimalModelRootMixin", "AnimalMeshMixin", "ModelPartAccessor", "CarriedBlockMixin", "VillagerFlightMixin", "QuadrupedAccessor", "QuadrupedFlightMixin", "GuestRenderMixin", "SoundLocationAccessor", "MusicMixin", "YsmFlightMixin", "MaidRendererMixin", "MaidModelMixin", "MaidGeckoMixin"],
+  "injectors": {"defaultRequire": 1}
+}

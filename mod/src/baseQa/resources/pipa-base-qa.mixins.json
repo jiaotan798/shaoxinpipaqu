@@ -1,0 +1,1 @@
+{"required":true,"package":"com.shaoxinpipaqu.qa.mixin","compatibilityLevel":"JAVA_21","client":["BackgroundWindowMixin","BackgroundMouseMixin","BaseMemeCaptureMixin"],"injectors":{"defaultRequire":1}}

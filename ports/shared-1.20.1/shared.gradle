@@ -1,0 +1,29 @@
+def common = file('../shared-1.20.1/src/main/java')
+sourceSets.main.java.srcDir(common)
+sourceSets.main.resources.srcDir('../shared-1.20.1/src/main/resources')
+sourceSets {
+    qa {
+        java.srcDir('../shared-1.20.1/src/qa/java')
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+    }
+}
+compileQaJava.source file('../../mod/src/qa/java/com/shaoxinpipaqu/qa/mixin/BackgroundMouseMixin.java')
+// Forge 会把缺少 pack.mcmeta 的模组列为加载警告，阻断 Quick Play 进入专服。
+processQaResources.from('../shared-1.20.1/src/main/resources/pack.mcmeta')
+// 跨版本仅共享不受 1.20.1 API 影响的实现；版本差异在两个旧版端共用源码中处理。
+def original = file('../../mod/src/main/java/com/shaoxinpipaqu')
+compileJava.source fileTree(original) {
+    include 'AudioInfo.java', 'FlightRules.java', 'SongState.java'
+    include 'client/AnimalFlightPose.java', 'client/AnimalModelRoot.java', 'client/FlightPoseMotion.java', 'client/MemeTiming.java'
+    include 'mixin/AnimationMixin.java', 'mixin/CarriedBlockMixin.java', 'mixin/FlightPushMixin.java'
+    include 'mixin/MobAiMixin.java', 'mixin/ModelPartAccessor.java', 'mixin/PlayerTravelMixin.java', 'mixin/Quadruped*.java'
+    include 'mixin/SoundLocationAccessor.java', 'mixin/TradeMenuMixin.java', 'mixin/VillagerFlightMixin.java'
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+processResources {
+    // ForgeGradle 在 Windows 上可能使用系统代码页；模组元数据中的中文按 UTF-8 展开。
+    filteringCharset = 'UTF-8'
+    inputs.property 'version', project.version
+    from('../../mod/src/main/resources') { include 'assets/**' }
+    filesMatching(['fabric.mod.json', 'META-INF/mods.toml']) { expand(version: project.version) }
+}

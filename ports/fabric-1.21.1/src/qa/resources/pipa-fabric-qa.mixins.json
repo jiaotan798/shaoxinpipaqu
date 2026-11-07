@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.shaoxinpipaqu.qa.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["BackgroundWindowMixin", "BackgroundMouseMixin"],
+  "injectors": {"defaultRequire": 1}
+}
