@@ -6,11 +6,8 @@
 
 ## 音频、狗奶包装图及表情包
 
-以下素材经授权随本模组的源码和成品分发。
-
-- **琵琶曲音频**由发布委托方提供。 [抖音来源](https://v.douyin.com/Mul29QvZXkc/)
-- **野生狗奶物品图**取自发布委托方提供的海报。 [同图出处](https://www.sohu.com/a/1062882674_121123957)
-- **大狗、白菜与肥嘟嘟表情包**由发布委托方提供。 [大狗](assets/source/meme-references/big-dog-bark-original.jpg) · [白菜](assets/source/meme-references/smiling-cabbage-original.jpg) · [肥嘟嘟](assets/source/meme-references/chubby-courage-original.png)
+- **琵琶曲音频**由发布委托方提供，经授权随本模组的源码和成品分发。 [抖音来源](https://v.douyin.com/Mul29QvZXkc/)
+- **野生狗奶物品图**和**大狗、白菜与肥嘟嘟表情包**为网络素材。
 
 两枚状态效果图标由本项目生成。 [概念稿](assets/source/effect-icons/v1/README.md)
 
