@@ -1,43 +1,41 @@
-# 烧心琵琶曲
+# 《烧心琵琶曲》
 
-《朋友的酒》的独立附属模组。**0.3.1** 降低了《琵琶曲》的音量，使它与《朋友的酒》切换时听起来更接近。 [六个端口的安装包](https://github.com/jiaotan798/shaoxinpipaqu/releases/tag/v0.3.1) · [历次更新](CHANGELOG.md) · [验证记录](VALIDATION.md)
+> 《烧心琵琶曲》是《朋友的酒》的附属模组，给玩偶加了一首能让附近生物起飞的曲子。**v0.3.1** 调低了《琵琶曲》的音量，两首歌切换时听起来更接近。
 
-## 安装与玩法
+## 下载与安装
 
-客户端和专服都要安装匹配 Minecraft 版本、加载器的附属及[《朋友的酒》0.1.19](https://github.com/jiaotan798/friendswine/releases/tag/v0.1.19)。Fabric 还需安装表中的 Fabric API。前置和可选模组分别安装。
+从 [v0.3.1 Release](https://github.com/jiaotan798/shaoxinpipaqu/releases/tag/v0.3.1) 下载与下表匹配的 `.jar`。
 
-| Minecraft | 加载器 | 附属版本 | 游戏 Java | Fabric API | 构建目录 |
-| --- | --- | --- | --- | --- | --- |
-| 1.20.1 | Forge 47.4.23 | 0.3.1 | 17 | — | `ports/forge-1.20.1` |
-| 1.20.1 | Fabric | 0.3.1 | 17 | 0.92.9+1.20.1 | `ports/fabric-1.20.1` |
-| 1.21.1 | NeoForge 21.1.252 | 0.3.1 | 21 | — | `mod` |
-| 1.21.1 | Fabric | 0.3.1 | 21 | 0.116.7+1.21.1 | `ports/fabric-1.21.1` |
-| 26.1.2 | NeoForge 26.1.2.94 | 0.3.1 | 25 | — | `ports/neoforge-26.1.2` |
-| 26.1.2 | Fabric | 0.3.1 | 25 | 0.149.0+26.1.2 | `ports/fabric-26.1.2` |
+| Minecraft | 加载器 | 安装位置 | 前置模组 |
+| --- | --- | --- | --- |
+| 1.20.1 | Forge 47.4.23 | 客户端及服务端 | 《朋友的酒》0.1.19 |
+| 1.20.1 | Fabric Loader 0.16.10 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19、Fabric API 0.92.9+1.20.1 或更高 |
+| 1.21.1 | NeoForge 21.1.252 | 客户端及服务端 | 《朋友的酒》0.1.19 |
+| 1.21.1 | Fabric Loader 0.16.10 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19、Fabric API 0.116.7+1.21.1 或更高 |
+| 26.1.2 | NeoForge 26.1.2.94 | 客户端及服务端 | 《朋友的酒》0.1.19 |
+| 26.1.2 | Fabric Loader 0.18.4 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19、Fabric API 0.149.0+26.1.2 或更高 |
 
-- 遥控器右键玩偶绑定，左键切换「朋友的酒／琵琶曲」，对空气右键切换停止和三个档位。切歌保留档位。
-- 琵琶曲从 50 格内抽取约 20% 的非玩家生物起飞，少量生物保底一只。一二档巡航，三档环绕，结束后安全下降。MJ 与三张表情包在歌曲对应卡点出现。
-- 忘情牛肉面提供 180 秒、随身 50 格的攻击保护。野生狗奶提供 60 秒飞行，双击跳跃起飞，跳跃或潜行控制升降。成年傻子村民可兑换两种食物，牛肉面所需的碗从背包额外扣除。
+把附属 JAR 和同一目标的[《朋友的酒》0.1.19](https://github.com/jiaotan798/friendswine/releases/tag/v0.1.19)及所需 Fabric API 放进对应实例的 `mods` 目录。Java 版本和联机安装步骤见[安装指南](https://github.com/jiaotan798/shaoxinpipaqu/releases/download/v0.3.1/INSTALL.txt)。
 
-## 构建
+## 玩法
 
-将对应的前置 JAR 按 Release 原文件名放在仓库根目录的 `local-deps/`。编译 NeoForge 1.21.1 另需 `ysm-2.6.5-neoforge+mc1.21.1-release.jar` 和 `touhoulittlemaid-1.5.3-neoforge+mc1.21.1.jar`，同样放在该目录。这两个模组是该端口的可选运行兼容依赖。
+- **切歌与切档**。拿遥控器右键绑定玩偶，左键切换《朋友的酒》和《琵琶曲》，对空气右键切换停止和三个档位。
+- **看生物飞行**。播放《琵琶曲》时，附近部分生物会飞起来。一、二档巡航，三档绕玩偶飞。歌曲唱到对应段落时会出现 MJ 文字和表情包。
+- **兑换食物**。找成年傻子村民兑换忘情牛肉面和野生狗奶。吃面可以暂时阻止附近生物攻击，喝奶后双击跳跃即可起飞。
 
-使用目标目录自带的 Gradle Wrapper。Forge 1.20.1 用 JDK 17，两个 1.21.1 目标用 JDK 21，26.1.2 用 JDK 25。Fabric 1.20.1 用 JDK 21 启动 Gradle，运行开发游戏时还需要 Gradle 能找到 JDK 17。首次构建需联网下载 Gradle 和公开依赖。
+触发条件和道具效果见[完整玩法说明](docs/完整玩法说明.md)，配置方法见[模组设置](docs/模组设置.md)。各版本变更见[更新记录](CHANGELOG.md)。
+
+## 构建源码
 
 ```powershell
-./ports/forge-1.20.1/gradlew.bat -p ./ports/forge-1.20.1 build
-./mod/gradlew.bat -p ./mod build
-python ./scripts/verify-build.py --matrix
+.\mod\gradlew.bat -p mod build
 ```
 
-其余目标使用表中目录替换命令路径。成品在相应目录的 `build/libs/`。校验矩阵前先构建六个目标，脚本要求 Python 3.11 或更新版本。重新导出素材时需要 FFmpeg，在 PATH 可用或将 `FFMPEG` 指向其可执行文件，再运行 `python ./scripts/prepare-resources.py`。
-
-验收探针保留在各端口源码中。NeoForge 26.1.2 服务端 GameTest 使用 `-PgameTests`，需要将匹配 0.1.19 的《朋友的酒》源码放入 `local-deps/friendswine-source/` 并先编译其 NeoForge 26.1.2 工程。实际覆盖见[验证记录](VALIDATION.md)。
+1.21.1 NeoForge 版的产物在 `mod/build/libs/`。构建环境及其他版本和加载器的步骤见[构建说明](docs/构建说明.md)。
 
 ## 反馈
 
-在 QQ 搜索群号 **873511838**，或扫描下方二维码加入「mc模组问题反馈群」。也可以在本仓库的 **Issues** 提交问题。反馈时请附上模组版本、Minecraft 版本、加载器和复现步骤。
+在 QQ 搜索群号 **873511838**，或扫描下方二维码加入「mc模组问题反馈群」。也可以在本仓库的 **[Issues](https://github.com/jiaotan798/shaoxinpipaqu/issues)** 提交问题。反馈时请附上模组版本、Minecraft 版本、加载器和复现步骤。
 
 <img src=".github/feedback-qq.png" alt="mc模组问题反馈群二维码，群号 873511838" width="220">
 
@@ -47,4 +45,4 @@ python ./scripts/verify-build.py --matrix
 
 - jiaotan_：[bilibili](https://space.bilibili.com/409729840?) · [抖音](https://v.douyin.com/KDs5ZxJh5V8/)
 
-项目采用现行模组元数据中的 All Rights Reserved 声明。见[许可状态](LICENSE-STATUS.md)和[第三方素材与依赖](THIRD_PARTY_NOTICES.md)。
+本模组的原创内容保留所有权利（**All Rights Reserved**），具体范围见[许可状态](LICENSE-STATUS.md)。上游模板、依赖和第三方素材适用各自的许可，见[第三方素材与依赖](THIRD_PARTY_NOTICES.md)。
