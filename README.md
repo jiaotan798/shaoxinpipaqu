@@ -35,6 +35,12 @@ python ./scripts/verify-build.py --matrix
 
 验收探针保留在各端口源码中。NeoForge 26.1.2 服务端 GameTest 使用 `-PgameTests`，需要将匹配 0.1.19 的《朋友的酒》源码放入 `local-deps/friendswine-source/` 并先编译其 NeoForge 26.1.2 工程。实际覆盖见[验证记录](VALIDATION.md)。
 
+## 反馈
+
+在 QQ 搜索群号 **873511838**，或扫描下方二维码加入「mc模组问题反馈群」。也可以在本仓库的 **Issues** 提交问题。反馈时请附上模组版本、Minecraft 版本、加载器和复现步骤。
+
+<img src=".github/feedback-qq.png" alt="mc模组问题反馈群二维码，群号 873511838" width="220">
+
 ## 许可
 
 项目采用现行模组元数据中的 All Rights Reserved 声明。见[许可状态](LICENSE-STATUS.md)、[第三方素材与依赖](THIRD_PARTY_NOTICES.md)和[版本记录](CHANGELOG.md)。
