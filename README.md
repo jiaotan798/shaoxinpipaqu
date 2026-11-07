@@ -1,6 +1,6 @@
 # 烧心琵琶曲
 
-《朋友的酒》的独立附属模组。**0.3.1** 降低了《琵琶曲》的音量，使它与《朋友的酒》切换时听起来更接近。 [六个端口的安装包](https://github.com/jiaotan798/shaoxinpipaqu/releases/tag/v0.3.1) · [验证记录](VALIDATION.md)
+《朋友的酒》的独立附属模组。**0.3.1** 降低了《琵琶曲》的音量，使它与《朋友的酒》切换时听起来更接近。 [六个端口的安装包](https://github.com/jiaotan798/shaoxinpipaqu/releases/tag/v0.3.1) · [历次更新](CHANGELOG.md) · [验证记录](VALIDATION.md)
 
 ## 安装与玩法
 
@@ -47,4 +47,4 @@ python ./scripts/verify-build.py --matrix
 
 - jiaotan_：[bilibili](https://space.bilibili.com/409729840?) · [抖音](https://v.douyin.com/KDs5ZxJh5V8/)
 
-项目采用现行模组元数据中的 All Rights Reserved 声明。见[许可状态](LICENSE-STATUS.md)、[第三方素材与依赖](THIRD_PARTY_NOTICES.md)和[版本记录](CHANGELOG.md)。
+项目采用现行模组元数据中的 All Rights Reserved 声明。见[许可状态](LICENSE-STATUS.md)和[第三方素材与依赖](THIRD_PARTY_NOTICES.md)。
