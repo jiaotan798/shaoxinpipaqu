@@ -14,7 +14,7 @@
 
 ## 音频、狗奶包装图及表情包
 
-- 琵琶曲音频由发布委托方提供，原件 `assets/source/提取音频.m4a` 的 SHA256 为 `de7e938af75cb3d44820c8056d45387c00a95a14b8f4a02982a7979baccfee3a`。游戏 OGG 另作转换及循环淡化。
+- 琵琶曲音频来源为[抖音视频](https://v.douyin.com/Mul29QvZXkc/)，音频文件由发布委托方提供。原件 `assets/source/提取音频.m4a` 的 SHA256 为 `de7e938af75cb3d44820c8056d45387c00a95a14b8f4a02982a7979baccfee3a`。游戏 OGG 另作转换及循环淡化。
 - 野生狗奶物品图取自委托方提供的海报画面，AI 提取盒装主体并补绘示意条码。见[来源与处理记录](assets/source/food-references/README.md)。
 - 大狗、白菜与肥嘟嘟表情包原件和来源见[卡点图片记录](assets/source/meme-references/README.md)。游戏纹理由原件缩放导出为 RGBA。
 - 两枚状态效果图标按本项目提示词生成，从[概念原图](assets/source/effect-icons/v1/README.md)导出 36×36 透明 PNG。
