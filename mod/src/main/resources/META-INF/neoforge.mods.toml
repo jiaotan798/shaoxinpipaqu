@@ -5,7 +5,26 @@ license="All Rights Reserved"
 modId="shaoxinpipaqu"
 version="${version}"
 displayName="烧心琵琶曲"
-description='''朋友的酒附属：琵琶曲、生物飞行、忘情牛肉面与野生狗奶。'''
+authors="jiaotan_"
+description='''
+《烧心琵琶曲》是《朋友的酒》的附属模组。客户端和服务端均需安装本模组及《朋友的酒》，前置支持 0.1.19 和 0.2.0。
+
+用《朋友的酒》的遥控器右键绑定玩偶，再按左键在《朋友的酒》和《琵琶曲》之间切歌。对空气右键可切换三档或停止播放。切歌会保留当前档位，播放中切歌时，新曲从头开始。
+
+《琵琶曲》响起时，玩偶会从 50 格内的非玩家生物中选出一部分，让它们飞起来。一、二档时，生物在附近巡航；三档时，它们绕着玩偶上下起伏。停歌后，飞起的生物会慢慢降落。唱到对应段落时，玩偶周围还会出现 MJ 文字和大狗、白菜、肥嘟嘟表情包。文字和表情包可分别关闭。
+
+成年傻子村民出售忘情牛肉面和野生狗奶。牛肉面需要 2 个熟牛肉、8 个小麦和 1 个碗，碗从背包扣除。野生狗奶需要 4 个绿宝石。创造模式下，可以在「朋友的酒」物品页找到这两样食物。
+
+吃下忘情牛肉面后，180 秒内，你周围 50 格内的生物会暂时停止互相攻击，也不会攻击玩家。喝下野生狗奶后可飞行 60 秒，双击跳跃起飞，按跳跃上升，按潜行下降。
+
+遇到问题，可以在 QQ 搜索群号 873511838，加入「mc模组问题反馈群」，也可以在 GitHub 提交反馈。
+https://github.com/jiaotan798/shaoxinpipaqu/issues
+反馈时请附上模组版本、Minecraft 版本、加载器和复现步骤。
+
+作者：jiaotan_
+bilibili：https://space.bilibili.com/409729840?
+抖音：https://v.douyin.com/KDs5ZxJh5V8/
+'''
 [[dependencies.shaoxinpipaqu]]
 modId="neoforge"
 type="required"
@@ -21,7 +40,7 @@ side="BOTH"
 [[dependencies.shaoxinpipaqu]]
 modId="friendswine"
 type="required"
-versionRange="[0.1.19]"
+versionRange="[0.1.19],[0.2.0]"
 ordering="AFTER"
 side="BOTH"
 [[mixins]]

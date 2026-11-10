@@ -1,4 +1,4 @@
-version = '0.3.1'
+version = '0.3.2'
 group = 'com.shaoxinpipaqu'
 base { archivesName = 'shaoxinpipaqu' }
 java { toolchain.languageVersion = JavaLanguageVersion.of(25) }
@@ -18,7 +18,8 @@ compileJava.source files([
 processResources {
     def resourceVersion = project.version.toString()
     inputs.property 'version', resourceVersion
-    filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) { expand(version: resourceVersion) }
+    // 展开版本占位符时保留 JSON 简介的换行转义。
+    filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) { expand([version: resourceVersion]) { escapeBackslash = true } }
     from("${baseline}/resources/assets") {
         into 'assets'
         exclude '**/shaders/**'

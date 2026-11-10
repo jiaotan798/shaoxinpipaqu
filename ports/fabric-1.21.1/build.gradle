@@ -1,6 +1,6 @@
 plugins { id 'net.fabricmc.fabric-loom-remap' version '1.15.5' }
 
-version = '0.3.1'
+version = '0.3.2'
 group = 'com.shaoxinpipaqu'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -26,7 +26,8 @@ compileJava.source fileTree(sharedJava) {
 processResources {
     inputs.property 'version', project.version
     from('../../mod/src/main/resources') { include 'assets/**' }
-    filesMatching('fabric.mod.json') { expand(version: project.version) }
+    // 展开版本占位符时保留 JSON 简介的换行转义。
+    filesMatching('fabric.mod.json') { expand([version: project.version]) { escapeBackslash = true } }
 }
 remapJar { archiveFileName = "shaoxinpipaqu-${version}-Fabric-1.21.1.jar" }
 

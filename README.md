@@ -1,21 +1,21 @@
 # 《烧心琵琶曲》
 
-> 《烧心琵琶曲》是《朋友的酒》的附属模组，给玩偶加了一首能让附近生物起飞的曲子。**v0.3.1** 调低了《琵琶曲》的音量，两首歌切换时听起来更接近。
+> 《烧心琵琶曲》是《朋友的酒》的附属模组，给玩偶加了一首能让附近生物起飞的曲子。**v0.3.2** 更新游戏内「模组」详情页的介绍，支持《朋友的酒》0.1.19 和 0.2.0。
 
 ## 下载与安装
 
-从 [v0.3.1 Release](https://github.com/jiaotan798/shaoxinpipaqu/releases/tag/v0.3.1) 下载与下表匹配的 `.jar`。
+从 [v0.3.2 Release](https://github.com/jiaotan798/shaoxinpipaqu/releases/tag/v0.3.2) 下载与下表匹配的 `.jar`。
 
 | Minecraft | 加载器 | 安装位置 | 前置模组 |
 | --- | --- | --- | --- |
-| 1.20.1 | Forge 47.4.23 | 客户端及服务端 | 《朋友的酒》0.1.19 |
-| 1.20.1 | Fabric Loader 0.16.10 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19、Fabric API 0.92.9+1.20.1 或更高 |
-| 1.21.1 | NeoForge 21.1.252 | 客户端及服务端 | 《朋友的酒》0.1.19 |
-| 1.21.1 | Fabric Loader 0.16.10 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19、Fabric API 0.116.7+1.21.1 或更高 |
-| 26.1.2 | NeoForge 26.1.2.94 | 客户端及服务端 | 《朋友的酒》0.1.19 |
-| 26.1.2 | Fabric Loader 0.18.4 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19、Fabric API 0.149.0+26.1.2 或更高 |
+| 1.20.1 | Forge 47.4.23 | 客户端及服务端 | 《朋友的酒》0.1.19 或 0.2.0 |
+| 1.20.1 | Fabric Loader 0.16.10 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19 或 0.2.0、Fabric API 0.92.9+1.20.1 或更高 |
+| 1.21.1 | NeoForge 21.1.252 | 客户端及服务端 | 《朋友的酒》0.1.19 或 0.2.0 |
+| 1.21.1 | Fabric Loader 0.16.10 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19 或 0.2.0、Fabric API 0.116.7+1.21.1 或更高 |
+| 26.1.2 | NeoForge 26.1.2.94 | 客户端及服务端 | 《朋友的酒》0.1.19 或 0.2.0 |
+| 26.1.2 | Fabric Loader 0.18.4 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19 或 0.2.0、Fabric API 0.149.0+26.1.2 或更高 |
 
-把附属 JAR 和同一目标的[《朋友的酒》0.1.19](https://github.com/jiaotan798/friendswine/releases/tag/v0.1.19)及所需 Fabric API 放进对应实例的 `mods` 目录。Java 版本和联机安装步骤见[安装指南](https://github.com/jiaotan798/shaoxinpipaqu/releases/download/v0.3.1/INSTALL.txt)。
+把附属 JAR、同一目标的《朋友的酒》和所需 Fabric API 放进对应实例的 `mods` 目录。联机时两端选同一个前置版本。 [朋友的酒 0.2.0](https://github.com/jiaotan798/friendswine/releases/tag/v0.2.0) · [朋友的酒 0.1.19](https://github.com/jiaotan798/friendswine/releases/tag/v0.1.19) · [安装指南](https://github.com/jiaotan798/shaoxinpipaqu/releases/download/v0.3.2/INSTALL.txt)
 
 ## 玩法
 

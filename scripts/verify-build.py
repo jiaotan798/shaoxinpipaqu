@@ -8,6 +8,11 @@ import tomllib
 import zipfile
 
 project = Path(__file__).resolve().parents[1]
+# 0.2.0 仅更新前置模组元数据，0.1.19 仍是编译基线。
+friendswine_maven_range = "[0.1.19],[0.2.0]"
+friendswine_fabric_versions = ["0.1.19", "0.2.0"]
+source_metadata = project / "mod/src/main/resources/META-INF/neoforge.mods.toml"
+description = tomllib.loads(source_metadata.read_text(encoding="utf-8"))["mods"][0]["description"].strip()
 version = (project / "mod/build.gradle").read_text(encoding="utf-8").split("version = '", 1)[1].split("'", 1)[0]
 jar = project / f"mod/build/libs/shaoxinpipaqu-{version}-NeoForge-1.21.1.jar"
 with zipfile.ZipFile(jar) as archive:
@@ -17,6 +22,8 @@ with zipfile.ZipFile(jar) as archive:
     metadata = tomllib.loads(archive.read("META-INF/neoforge.mods.toml").decode())
     assert metadata["mods"][0]["modId"] == "shaoxinpipaqu"
     assert metadata["mods"][0]["version"] == version
+    assert metadata["mods"][0]["description"].strip() == description
+    assert metadata["mods"][0]["authors"] == "jiaotan_"
     assert "com/shaoxinpipaqu/client/ClientConfig.class" in names, "本机卡点配置必须进入成品"
     for language in ("zh_cn", "en_us"):
         labels = json.loads(archive.read(f"assets/shaoxinpipaqu/lang/{language}.json"))
@@ -24,7 +31,7 @@ with zipfile.ZipFile(jar) as archive:
             assert f"shaoxinpipaqu.config.{key}" in labels and f"shaoxinpipaqu.config.{key}.tooltip" in labels
     assert not any(p.startswith(("com/elfmcys/", "com/github/tartaricacid/")) for p in names), "成品不得嵌入可选模组"
     dependency = next(d for d in metadata["dependencies"]["shaoxinpipaqu"] if d["modId"] == "friendswine")
-    assert dependency["versionRange"] == "[0.1.19]" and dependency["side"] == "BOTH"
+    assert dependency["versionRange"] == friendswine_maven_range and dependency["side"] == "BOTH"
     mixins = json.loads(archive.read("shaoxinpipaqu.mixins.json"))
     for name in mixins["mixins"] + mixins["client"]:
         assert f"com/shaoxinpipaqu/mixin/{name}.class" in names
@@ -83,13 +90,15 @@ if sys.argv[1:] == ["--matrix"]:
             if loader == "Fabric":
                 info = json.loads(archive.read("fabric.mod.json"))
                 assert info["id"] == "shaoxinpipaqu" and info["version"] == target_version, package.name
-                assert info["depends"]["friendswine"] == "0.1.19" and info["depends"]["minecraft"] == minecraft, package.name
+                assert info["depends"]["friendswine"] == friendswine_fabric_versions and info["depends"]["minecraft"] == minecraft, package.name
+                assert info["description"].strip() == description and info["authors"] == ["jiaotan_"], package.name
             else:
                 metadata_file = "mods.toml" if loader == "Forge" else "neoforge.mods.toml"
                 info = tomllib.loads(archive.read("META-INF/" + metadata_file).decode())
                 assert info["mods"][0]["modId"] == "shaoxinpipaqu" and info["mods"][0]["version"] == target_version, package.name
                 dependencies = {dep["modId"]: dep for dep in info["dependencies"]["shaoxinpipaqu"]}
-                assert dependencies["friendswine"]["versionRange"] == "[0.1.19]", package.name
+                assert dependencies["friendswine"]["versionRange"] == friendswine_maven_range, package.name
+                assert info["mods"][0]["description"].strip() == description and info["mods"][0]["authors"] == "jiaotan_", package.name
                 assert dependencies["minecraft"]["versionRange"] == f"[{minecraft}]", package.name
             for asset in content:
                 assert archive.read(f"assets/shaoxinpipaqu/{asset}") == (shared_assets / asset).read_bytes(), (package.name, asset)

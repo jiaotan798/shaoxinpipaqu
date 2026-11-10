@@ -25,5 +25,6 @@ processResources {
     filteringCharset = 'UTF-8'
     inputs.property 'version', project.version
     from('../../mod/src/main/resources') { include 'assets/**' }
-    filesMatching(['fabric.mod.json', 'META-INF/mods.toml']) { expand(version: project.version) }
+    // 展开版本占位符时保留 JSON 简介的换行转义。
+    filesMatching(['fabric.mod.json', 'META-INF/mods.toml']) { expand([version: project.version]) { escapeBackslash = true } }
 }
