@@ -134,6 +134,9 @@ public final class PortClientCheck {
                 String screen = mc.screen == null ? "none" : mc.screen.getClass().getName();
                 String overlay = mc.getOverlay() == null ? "none" : mc.getOverlay().getClass().getName();
                 String state = "screen=" + screen + " overlay=" + overlay;
+                // 隐藏客户端无法人工读断连界面，将原版完整原因落盘，避免只留下登录超时。
+                if (mc.screen instanceof net.minecraft.client.gui.screens.DisconnectedScreen)
+                    state += " reason=" + mc.screen.getNarrationMessage().getString();
                 if (!startup.equals(state)) {
                     startup = state;
                     PortCheck.write(role + "-startup.txt", state);

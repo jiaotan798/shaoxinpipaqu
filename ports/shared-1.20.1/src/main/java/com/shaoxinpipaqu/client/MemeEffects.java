@@ -120,14 +120,16 @@ public final class MemeEffects {
         vertex(out,transform,10,-4,1,0,color,1);
     }
 
+    /** 按原图宽高比提交图片；UV 适配 1.20.1 相机方向，透明度沿用同步卡点淡入淡出。 */
     private static void drawPicture(PoseStack pose,MultiBufferSource buffers,MemeTiming.Cue cue,float alpha) {
         ResourceLocation texture=switch(cue) {case DOG->DOG;case CABBAGE->CABBAGE;case COURAGE->COURAGE;default->throw new IllegalArgumentException("非图片卡点");};
         // 导出纹理尺寸分别为396×388、379×512和512×512；原背景、文字和构图全部保留。
         float aspect=switch(cue) {case DOG->396F/388;case CABBAGE->379F/512;default->1;};
         float halfHeight=0.9F,halfWidth=halfHeight*aspect;
         var out=buffers.getBuffer(PictureLayer.type(texture));var transform=pose.last();
-        vertex(out,transform,-halfWidth,-halfHeight,0,1,0xFFFFFF,alpha);vertex(out,transform,halfWidth,-halfHeight,1,1,0xFFFFFF,alpha);
-        vertex(out,transform,halfWidth,halfHeight,1,0,0xFFFFFF,alpha);vertex(out,transform,-halfWidth,halfHeight,0,0,0xFFFFFF,alpha);
+        // 1.20.1 的相机与世界视图合成后仍绕 Y 轴转 180°，局部 +X 朝屏幕左；反向 U 才能保持原图文字可读。
+        vertex(out,transform,-halfWidth,-halfHeight,1,1,0xFFFFFF,alpha);vertex(out,transform,halfWidth,-halfHeight,0,1,0xFFFFFF,alpha);
+        vertex(out,transform,halfWidth,halfHeight,0,0,0xFFFFFF,alpha);vertex(out,transform,-halfWidth,halfHeight,1,0,0xFFFFFF,alpha);
     }
     private static void vertex(VertexConsumer out,PoseStack.Pose pose,float x,float y,float u,float v,int color,float alpha) {
         // 1.20.1 的 BufferBuilder 只接受 POSITION_TEX_COLOR 规定的位置、UV、颜色顺序。

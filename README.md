@@ -1,10 +1,10 @@
 # 《烧心琵琶曲》
 
-> 《烧心琵琶曲》是《朋友的酒》的附属模组，给玩偶加了一首能让附近生物起飞的曲子。**v0.3.2** 更新游戏内「模组」详情页的介绍，支持《朋友的酒》0.1.19 和 0.2.0。
+> 《烧心琵琶曲》是《朋友的酒》的附属模组，给玩偶加了一首能让附近生物起飞的曲子。**v0.3.3** 修复 Minecraft 1.20.1 Forge、Fabric 版表情包左右镜像的问题，支持《朋友的酒》0.1.19 和 0.2.0。
 
 ## 下载与安装
 
-从 [v0.3.2 Release](https://github.com/jiaotan798/shaoxinpipaqu/releases/tag/v0.3.2) 下载与下表匹配的 `.jar`。
+Minecraft 1.20.1 从 [v0.3.3 Release](https://github.com/jiaotan798/shaoxinpipaqu/releases/tag/v0.3.3) 下载；1.21.1 和 26.1.2 继续使用 [v0.3.2 Release](https://github.com/jiaotan798/shaoxinpipaqu/releases/tag/v0.3.2)。
 
 | Minecraft | 加载器 | 安装位置 | 前置模组 |
 | --- | --- | --- | --- |
@@ -15,7 +15,7 @@
 | 26.1.2 | NeoForge 26.1.2.94 | 客户端及服务端 | 《朋友的酒》0.1.19 或 0.2.0 |
 | 26.1.2 | Fabric Loader 0.18.4 或更高 | 客户端及服务端 | 《朋友的酒》0.1.19 或 0.2.0、Fabric API 0.149.0+26.1.2 或更高 |
 
-把附属 JAR、同一目标的《朋友的酒》和所需 Fabric API 放进对应实例的 `mods` 目录。联机时两端选同一个前置版本。 [朋友的酒 0.2.0](https://github.com/jiaotan798/friendswine/releases/tag/v0.2.0) · [朋友的酒 0.1.19](https://github.com/jiaotan798/friendswine/releases/tag/v0.1.19) · [安装指南](https://github.com/jiaotan798/shaoxinpipaqu/releases/download/v0.3.2/INSTALL.txt)
+把附属 JAR、同一目标的《朋友的酒》和所需 Fabric API 放进对应实例的 `mods` 目录。升级时移出旧版附属 JAR，客户端和服务端同步更新，前置版本保持一致。 [朋友的酒 0.2.0](https://github.com/jiaotan798/friendswine/releases/tag/v0.2.0) · [朋友的酒 0.1.19](https://github.com/jiaotan798/friendswine/releases/tag/v0.1.19) · [1.20.1 安装指南](https://github.com/jiaotan798/shaoxinpipaqu/releases/download/v0.3.3/INSTALL.txt) · [其他版本安装指南](https://github.com/jiaotan798/shaoxinpipaqu/releases/download/v0.3.2/INSTALL.txt)
 
 ## 玩法
 

@@ -2,6 +2,11 @@
 
 公开安装包见 [GitHub Releases](https://github.com/jiaotan798/shaoxinpipaqu/releases)。0.2.9 是首个公开发行版，更早的条目记录开发期间的改动。
 
+## 0.3.3
+
+- 修复 Minecraft 1.20.1 Forge、Fabric 版表情包左右镜像的问题，图片中的文字恢复正常方向。 [issue #1](https://github.com/jiaotan798/shaoxinpipaqu/issues/1)
+- 图片大小、位置、双图倾角和卡点时间保持原值。其余四个端口继续使用 0.3.2。 [验证记录](VALIDATION.md#033)
+
 ## 0.3.2
 
 - 六个 Java 端口更新游戏内模组简介，补齐玩法、反馈入口和作者主页。
